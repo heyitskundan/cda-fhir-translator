@@ -1,0 +1,42 @@
+{
+  "name": "cda-fhir-translator-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Monorepo for cda-fhir-translator (the published npm package) and its browser demo",
+  "license": "Apache-2.0",
+  "workspaces": [
+    "packages/core",
+    "client"
+  ],
+  "scripts": {
+    "build": "npm run build -w packages/core && npm run build -w client",
+    "test": "npm run test -w packages/core && npm run test -w client",
+    "dev": "npm run dev -w client",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "eslint": "^9.39.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.4",
+    "prettier": "^3.9.6",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.67.0",
+    "simple-git-hooks": "^2.11.1",
+    "lint-staged": "^15.2.10"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged && node scripts/check-secrets.mjs"
+  },
+  "lint-staged": {
+    "packages/core/**/*.ts": [
+      "bash -c 'tsc --noEmit -p packages/core/tsconfig.json'",
+      "bash -c 'npm run test -w packages/core -- run'"
+    ]
+  }
+}

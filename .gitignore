@@ -1,0 +1,11 @@
+dist/
+node_modules/
+*.xml
+!packages/core/test/fixtures/**/*.xml
+*.json.bak
+.env
+*.log
+coverage/
+.DS_Store
+*.tsbuildinfo
+.claude/

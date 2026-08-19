@@ -1,0 +1,72 @@
+{
+  "name": "cda-fhir-translator",
+  "version": "0.1.0",
+  "description": "Deterministic C-CDA 2.1 XML <-> FHIR R4 Bundle translator with a field-level mapping trail.",
+  "keywords": [
+    "hl7",
+    "cda",
+    "ccda",
+    "fhir",
+    "fhir-r4",
+    "healthcare",
+    "healthtech",
+    "interoperability",
+    "c-cda",
+    "cli"
+  ],
+  "license": "Apache-2.0",
+  "author": "Kundan",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heyitskundan/cda-fhir-translator.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/heyitskundan/cda-fhir-translator#readme",
+  "bugs": {
+    "url": "https://github.com/heyitskundan/cda-fhir-translator/issues"
+  },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./dist/index.d.ts",
+        "require": "./dist/index.d.cts"
+      },
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "bin": {
+    "cda-fhir-translator": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "prepublishOnly": "npm run build && npm run typecheck && npm test"
+  },
+  "dependencies": {
+    "fast-xml-parser": "5.10.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "@vitest/coverage-v8": "4.1.10",
+    "tsup": "8.5.1",
+    "typescript": "5.7.2",
+    "vitest": "4.1.10"
+  }
+}
