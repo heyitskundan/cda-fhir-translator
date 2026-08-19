@@ -41,13 +41,18 @@ always builds a Continuity of Care Document — see
 [`docs/CCDA_FHIR_MAPPING.md`](./docs/CCDA_FHIR_MAPPING.md) for that limitation and the
 Vital Signs grouping caveat.
 
-| Section     | LOINC   |
-| ----------- | ------- |
-| Allergies   | 48765-2 |
-| Medications | 10160-0 |
-| Problems    | 11450-4 |
-| Vital Signs | 8716-3  |
-| Results     | 30954-2 |
+| Section        | LOINC   |
+| -------------- | ------- |
+| Allergies      | 48765-2 |
+| Medications    | 10160-0 |
+| Problems       | 11450-4 |
+| Vital Signs    | 8716-3  |
+| Results        | 30954-2 |
+| Procedures     | 47519-4 |
+| Immunizations  | 11369-6 |
+| Encounters     | 46240-8 |
+| Social History | 29762-2 |
+| Family History | 10157-6 |
 
 Each section's entry template root is verified against the C-CDA 2.1 spec — see
 [`docs/CCDA_FHIR_MAPPING.md`](./docs/CCDA_FHIR_MAPPING.md) for the field-level detail.

@@ -29,6 +29,11 @@ const SUPPORTED_SECTIONS: SupportedSection[] = [
   { loinc: "11450-4", label: "Problems", fhir: "Condition" },
   { loinc: "8716-3", label: "Vital Signs", fhir: "Observation[category=vital-signs]" },
   { loinc: "30954-2", label: "Results", fhir: "DiagnosticReport + Observation[]" },
+  { loinc: "47519-4", label: "Procedures", fhir: "Procedure" },
+  { loinc: "11369-6", label: "Immunizations", fhir: "Immunization" },
+  { loinc: "46240-8", label: "Encounters", fhir: "Encounter" },
+  { loinc: "29762-2", label: "Social History", fhir: "Observation[category=social-history]" },
+  { loinc: "10157-6", label: "Family History", fhir: "FamilyMemberHistory" },
 ];
 
 interface FieldRow {
@@ -185,6 +190,120 @@ const MAPPING_SECTIONS: MappingSection[] = [
     footnote:
       "FHIR → C-CDA can't recover the original organizer grouping: `cdaToFhir` preserves each source `<organizer>` as a separate group, but that grouping isn't carried on the FHIR Observation resources — only `category=vital-signs` is. `fhirToCda` groups all vital-signs Observations into a single organizer; coded data round-trips, the grouping doesn't.",
   },
+  {
+    id: "procedures",
+    title: "Procedures (47519-4) → Procedure",
+    description:
+      "Entry template root `2.16.840.1.113883.10.20.22.4.14` (Procedure Activity Procedure V2), verified against the C-CDA 2.1 spec.",
+    tables: [
+      {
+        rows: [
+          { cda: "procedure/code", fhir: "Procedure.code", note: "CPT-4 or SNOMED" },
+          {
+            cda: "procedure/statusCode/@code",
+            fhir: "Procedure.status",
+            note: "completed/active/aborted/cancelled/held → completed/in-progress/stopped/not-done/on-hold",
+          },
+          {
+            cda: "procedure/effectiveTime/@value or low",
+            fhir: "Procedure.performedDateTime",
+            note: "—",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "immunizations",
+    title: "Immunizations (11369-6) → Immunization",
+    description:
+      "Entry template root `2.16.840.1.113883.10.20.22.4.52` (Immunization Activity V3), verified against the C-CDA 2.1 spec.",
+    tables: [
+      {
+        rows: [
+          {
+            cda: "consumable/.../manufacturedMaterial/code",
+            fhir: "Immunization.vaccineCode",
+            note: "CVX",
+          },
+          {
+            cda: "statusCode/@code",
+            fhir: "Immunization.status",
+            note: "completed/aborted/cancelled → completed/not-done/not-done",
+          },
+          {
+            cda: "effectiveTime/@value or low",
+            fhir: "Immunization.occurrenceDateTime",
+            note: "—",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "encounters",
+    title: "Encounters (46240-8) → Encounter",
+    description:
+      "Entry template root `2.16.840.1.113883.10.20.22.4.49` (Encounter Activity V3), verified against the C-CDA 2.1 spec. Distinct from the header's componentOf/encompassingEncounter.",
+    tables: [
+      {
+        rows: [
+          { cda: "code", fhir: "Encounter.class", note: "A Coding, not a CodeableConcept" },
+          {
+            cda: "statusCode/@code",
+            fhir: "Encounter.status",
+            note: "completed/active → finished/in-progress",
+          },
+          {
+            cda: "effectiveTime/@value or low/high",
+            fhir: "Encounter.period",
+            note: "—",
+          },
+        ],
+      },
+    ],
+    footnote:
+      "`fhirToCda` treats the first `Encounter` resource in the input Bundle as the document header's encounter and excludes it from this section, so it isn't built twice.",
+  },
+  {
+    id: "social-history",
+    title: "Social History (29762-2) → Observation[category=social-history]",
+    description:
+      "Entry template root `2.16.840.1.113883.10.20.22.4.78` (Smoking Status Observation), verified against the C-CDA 2.1 spec. Covers Smoking Status only, not the full Social History section.",
+    tables: [
+      {
+        rows: [
+          {
+            cda: "observation (not organizer-grouped)",
+            fhir: "Observation[category=social-history]",
+            note: "One entry per observation",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "family-history",
+    title: "Family History (10157-6) → FamilyMemberHistory",
+    description:
+      "Entry template root `2.16.840.1.113883.10.20.22.4.45` (Family History Organizer V3), verified against the C-CDA 2.1 spec.",
+    tables: [
+      {
+        rows: [
+          {
+            cda: "subject/relatedSubject/code",
+            fhir: "FamilyMemberHistory.relationship",
+            note: "—",
+          },
+          {
+            cda: "component/observation/value[@xsi:type=CD]",
+            fhir: "FamilyMemberHistory.condition[].code",
+            note: "One per nested Family History Observation",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 const CODE_SYSTEMS: { oid: string; uri: string }[] = [
@@ -194,6 +313,8 @@ const CODE_SYSTEMS: { oid: string; uri: string }[] = [
   { oid: "2.16.840.1.113883.6.8", uri: "http://unitsofmeasure.org" },
   { oid: "2.16.840.1.113883.6.90", uri: "http://hl7.org/fhir/sid/icd-10-cm" },
   { oid: "2.16.840.1.113883.6.103", uri: "http://hl7.org/fhir/sid/icd-9-cm" },
+  { oid: "2.16.840.1.113883.6.12", uri: "http://www.ama-assn.org/go/cpt" },
+  { oid: "2.16.840.1.113883.5.111", uri: "http://terminology.hl7.org/CodeSystem/v3-RoleCode" },
   { oid: "2.16.840.1.113883.12.292", uri: "http://hl7.org/fhir/sid/cvx" },
   { oid: "2.16.840.1.113883.5.1", uri: "http://hl7.org/fhir/administrative-gender" },
   { oid: "2.16.840.1.113883.5.14", uri: "http://terminology.hl7.org/CodeSystem/v3-ActStatus" },
@@ -295,7 +416,7 @@ export function DataMapping() {
           C-CDA on FHIR R4 Implementation Guide
         </a>
         . Section extraction is document-type-agnostic — <code>cdaToFhir</code> scans any C-CDA
-        document for whichever of the 5 supported sections it contains.
+        document for whichever of the 10 supported sections it contains.
         <code> fhirToCda</code> always builds a Continuity of Care Document (document-type selection
         isn&apos;t implemented yet).
       </p>

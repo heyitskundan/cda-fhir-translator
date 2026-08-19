@@ -195,6 +195,14 @@ export interface ServiceRequest extends FhirResourceBase {
   occurrenceDateTime?: string;
 }
 
+export interface FamilyMemberHistory extends FhirResourceBase {
+  resourceType: "FamilyMemberHistory";
+  status: string;
+  patient: Reference;
+  relationship?: CodeableConcept;
+  condition?: { code?: CodeableConcept }[];
+}
+
 export interface Consent extends FhirResourceBase {
   resourceType: "Consent";
   status: string;
@@ -218,7 +226,8 @@ export type FhirResource =
   | Goal
   | CareTeam
   | ServiceRequest
-  | Consent;
+  | Consent
+  | FamilyMemberHistory;
 
 export interface BundleEntry {
   fullUrl?: string;

@@ -1,4 +1,4 @@
-import type { FhirBundle, MappingTraceEntry, TranslateWarning } from "../shared/types.js";
+import type { Encounter, FhirBundle, MappingTraceEntry, TranslateWarning } from "../shared/types.js";
 import { compact } from "../cda-to-fhir/utils/xml-tree.js";
 import { buildHeader, type HeaderInput } from "./header.js";
 import { buildAllSections } from "./sections/index.js";
@@ -18,7 +18,9 @@ export function fhirToCda(bundle: FhirBundle): TranslateToCdaResult {
   const patient = resources.find((r) => r.resourceType === "Patient");
   const practitioner = resources.find((r) => r.resourceType === "Practitioner");
   const organization = resources.find((r) => r.resourceType === "Organization");
-  const encounter = resources.find((r) => r.resourceType === "Encounter");
+  const encounter = resources.find((r) => r.resourceType === "Encounter") as
+    | Encounter
+    | undefined;
   const composition = resources.find((r) => r.resourceType === "Composition");
 
   const warnings: TranslateWarning[] = [];
@@ -39,7 +41,7 @@ export function fhirToCda(bundle: FhirBundle): TranslateToCdaResult {
     }) as HeaderInput,
   );
 
-  const { sections, mappings } = buildAllSections(resources);
+  const { sections, mappings } = buildAllSections(resources, encounter);
 
   const clinicalDocument = {
     ...header,

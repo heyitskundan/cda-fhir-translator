@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.2.0
+
+- `cdaToFhir`/`fhirToCda`: 4 new sections, both directions — Procedures (47519-4),
+  Immunizations (11369-6), Encounters (46240-8), and Social History/Smoking Status
+  (29762-2). Each section's entry template root is verified against the C-CDA 2.1 spec,
+  same as v0.1.0's sections. 10 sections total.
+- Family History (10157-6) maps to a new `FamilyMemberHistory` type — one resource per
+  Family History Organizer, with a `condition[]` entry per nested Family History
+  Observation.
+- Added CPT-4 (`2.16.840.1.113883.6.12`) and HL7 RoleCode (`2.16.840.1.113883.5.111`)
+  to the code system table, used by Procedures and Family History respectively.
+- The Encounters section and the header's `componentOf/encompassingEncounter` both map
+  to FHIR `Encounter`; `fhirToCda` now distinguishes them so a document with both
+  doesn't produce a duplicate encounter — see `docs/CCDA_FHIR_MAPPING.md`.
+
 ## v0.1.0
 
 - `cdaToFhir(cdaXml, options)`: parses a C-CDA 2.1 XML document and maps its header

@@ -7,9 +7,11 @@ export const OID_TO_URI: Readonly<Record<string, string>> = {
   "2.16.840.1.113883.6.8": "http://unitsofmeasure.org",
   "2.16.840.1.113883.6.90": "http://hl7.org/fhir/sid/icd-10-cm",
   "2.16.840.1.113883.6.103": "http://hl7.org/fhir/sid/icd-9-cm",
+  "2.16.840.1.113883.6.12": "http://www.ama-assn.org/go/cpt",
   "2.16.840.1.113883.12.292": "http://hl7.org/fhir/sid/cvx",
   "2.16.840.1.113883.5.1": "http://hl7.org/fhir/administrative-gender",
   "2.16.840.1.113883.5.14": "http://terminology.hl7.org/CodeSystem/v3-ActStatus",
+  "2.16.840.1.113883.5.111": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
 };
 
 const URI_TO_OID: Readonly<Record<string, string>> = Object.fromEntries(

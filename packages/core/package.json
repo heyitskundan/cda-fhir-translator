@@ -1,6 +1,6 @@
 {
   "name": "cda-fhir-translator",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Deterministic C-CDA 2.1 XML <-> FHIR R4 Bundle translator with a field-level mapping trail.",
   "keywords": [
     "hl7",
