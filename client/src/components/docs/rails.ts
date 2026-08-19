@@ -31,7 +31,15 @@ export const dataMappingRail: RailItem[] = [
   { href: "#problems", label: "Problems → Condition" },
   { href: "#vitals", label: "Vital Signs → Observation" },
   { href: "#results", label: "Results → DiagnosticReport" },
+  { href: "#procedures", label: "Procedures → Procedure" },
+  { href: "#immunizations", label: "Immunizations → Immunization" },
+  { href: "#encounters", label: "Encounters → Encounter" },
+  { href: "#social-history", label: "Social History → Observation" },
+  { href: "#family-history", label: "Family History → FamilyMemberHistory" },
   { href: "#terminology", label: "Code systems" },
 ];
 
-export const changelogRail: RailItem[] = [{ href: "#v0-1-0", label: "v0.1.0" }];
+export const changelogRail: RailItem[] = [
+  { href: "#v0-2-0", label: "v0.2.0" },
+  { href: "#v0-1-0", label: "v0.1.0" },
+];
