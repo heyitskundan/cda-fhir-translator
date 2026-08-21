@@ -36,10 +36,12 @@ export const dataMappingRail: RailItem[] = [
   { href: "#encounters", label: "Encounters → Encounter" },
   { href: "#social-history", label: "Social History → Observation" },
   { href: "#family-history", label: "Family History → FamilyMemberHistory" },
+  { href: "#payers", label: "Payers → Coverage" },
   { href: "#terminology", label: "Code systems" },
 ];
 
 export const changelogRail: RailItem[] = [
+  { href: "#v0-3-0", label: "v0.3.0" },
   { href: "#v0-2-0", label: "v0.2.0" },
   { href: "#v0-1-0", label: "v0.1.0" },
 ];

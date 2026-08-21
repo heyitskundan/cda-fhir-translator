@@ -34,6 +34,7 @@ const SUPPORTED_SECTIONS: SupportedSection[] = [
   { loinc: "46240-8", label: "Encounters", fhir: "Encounter" },
   { loinc: "29762-2", label: "Social History", fhir: "Observation[category=social-history]" },
   { loinc: "10157-6", label: "Family History", fhir: "FamilyMemberHistory" },
+  { loinc: "48768-6", label: "Payers", fhir: "Coverage" },
 ];
 
 interface FieldRow {
@@ -304,6 +305,33 @@ const MAPPING_SECTIONS: MappingSection[] = [
       },
     ],
   },
+  {
+    id: "payers",
+    title: "Payers (48768-6) → Coverage",
+    description:
+      "Entry template root `2.16.840.1.113883.10.20.22.4.60` (Coverage Activity V3), verified against the C-CDA 2.1 spec.",
+    tables: [
+      {
+        rows: [
+          {
+            cda: "statusCode/@code",
+            fhir: "Coverage.status",
+            note: "completed/active → active, aborted/cancelled → cancelled",
+          },
+          {
+            cda: "entryRelationship/act[Policy Activity]/code",
+            fhir: "Coverage.type",
+            note: "—",
+          },
+          {
+            cda: ".../representedOrganization/name",
+            fhir: "Coverage.payor[].display",
+            note: "Display-only — no Organization resource is created",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 const CODE_SYSTEMS: { oid: string; uri: string }[] = [
@@ -416,7 +444,7 @@ export function DataMapping() {
           C-CDA on FHIR R4 Implementation Guide
         </a>
         . Section extraction is document-type-agnostic — <code>cdaToFhir</code> scans any C-CDA
-        document for whichever of the 10 supported sections it contains.
+        document for whichever of the 11 supported sections it contains.
         <code> fhirToCda</code> always builds a Continuity of Care Document (document-type selection
         isn&apos;t implemented yet).
       </p>

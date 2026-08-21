@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.3.0
+
+- `cdaToFhir`/`fhirToCda`: Payers/Insurance (48768-6), both directions. Maps to a new
+  `Coverage` type — `statusCode` → `status`, the nested Policy Activity's `code` →
+  `type`, and its `representedOrganization/name` → `payor[].display` (display-only, no
+  `Organization` resource is created). 11 sections total.
+
 ## v0.2.0
 
 - `cdaToFhir`/`fhirToCda`: 4 new sections, both directions — Procedures (47519-4),

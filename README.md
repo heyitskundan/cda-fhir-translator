@@ -53,6 +53,7 @@ Vital Signs grouping caveat.
 | Encounters     | 46240-8 |
 | Social History | 29762-2 |
 | Family History | 10157-6 |
+| Payers         | 48768-6 |
 
 Each section's entry template root is verified against the C-CDA 2.1 spec — see
 [`docs/CCDA_FHIR_MAPPING.md`](./docs/CCDA_FHIR_MAPPING.md) for the field-level detail.

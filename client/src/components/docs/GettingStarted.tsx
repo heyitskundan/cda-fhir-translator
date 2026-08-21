@@ -19,7 +19,7 @@ export function GettingStarted({ goDataMapping }: { goDataMapping: () => void })
         Translation is a pure function: the same input always produces the same output. There is no
         network I/O and no persistence — the library parses a string and returns a string. It ships
         as both an ESM and a CommonJS package, runs in Node.js 18+ or any modern browser, and is
-        covered by 85 unit tests across the parser, header mapping, all 10 section mappings in both
+        covered by 91 unit tests across the parser, header mapping, all 11 section mappings in both
         directions, the CLI, and a CDA → FHIR → CDA roundtrip.
       </p>
 

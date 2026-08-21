@@ -5,6 +5,7 @@ import { mapEncountersSection } from "./encounters.js";
 import { mapFamilyHistorySection } from "./family-history.js";
 import { mapImmunizationsSection } from "./immunizations.js";
 import { mapMedicationsSection } from "./medications.js";
+import { mapPayersSection } from "./payers.js";
 import { mapProblemsSection } from "./problems.js";
 import { mapProceduresSection } from "./procedures.js";
 import { mapResultsSection } from "./results.js";
@@ -25,6 +26,7 @@ const SECTION_MAPPERS: ((root: CdaNode, patientRef: Reference) => SectionMapResu
   mapEncountersSection,
   mapSocialHistorySection,
   mapFamilyHistorySection,
+  mapPayersSection,
 ];
 
 /** LOINC section codes this package maps. Kept in sync by test/mapping-audit.test.ts. */
@@ -39,6 +41,7 @@ export const SUPPORTED_SECTION_LOINC_CODES = [
   "46240-8", // Encounters
   "29762-2", // Social History
   "10157-6", // Family History
+  "48768-6", // Payers
 ] as const;
 
 export function mapAllSections(root: CdaNode, patientRef: Reference): SectionMapResult {

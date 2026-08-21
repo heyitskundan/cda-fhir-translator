@@ -9,10 +9,29 @@ export function Changelog() {
       </p>
 
       <div className="flex flex-col gap-6">
+        <div id="v0-3-0" className="border-t pt-3" style={{ borderColor: "var(--color-divider)" }}>
+          <div className="mb-2 flex items-baseline gap-3">
+            <h3 className="m-0">v0.3.0</h3>
+            <span className="text-muted text-sm">current release</span>
+          </div>
+          <div className="mb-2 flex gap-2">
+            <span className="tag tag-accent">Added</span>
+          </div>
+          <ul className="m-0 flex list-disc flex-col gap-1 pl-5" style={{ opacity: 0.85 }}>
+            <li>
+              Payers / Insurance (48768-6), both directions — 11 sections total, maps to a new{" "}
+              <code>Coverage</code> type
+            </li>
+            <li>
+              The nested Policy Activity&apos;s <code>code</code> maps to <code>Coverage.type</code>
+              , and its represented organization name maps to <code>Coverage.payor[].display</code>{" "}
+              (display-only — no <code>Organization</code> resource is created)
+            </li>
+          </ul>
+        </div>
         <div id="v0-2-0" className="border-t pt-3" style={{ borderColor: "var(--color-divider)" }}>
           <div className="mb-2 flex items-baseline gap-3">
             <h3 className="m-0">v0.2.0</h3>
-            <span className="text-muted text-sm">current release</span>
           </div>
           <div className="mb-2 flex gap-2">
             <span className="tag tag-accent">Added</span>

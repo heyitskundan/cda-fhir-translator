@@ -203,6 +203,14 @@ export interface FamilyMemberHistory extends FhirResourceBase {
   condition?: { code?: CodeableConcept }[];
 }
 
+export interface Coverage extends FhirResourceBase {
+  resourceType: "Coverage";
+  status: string;
+  beneficiary: Reference;
+  payor?: Reference[];
+  type?: CodeableConcept;
+}
+
 export interface Consent extends FhirResourceBase {
   resourceType: "Consent";
   status: string;
@@ -227,7 +235,8 @@ export type FhirResource =
   | CareTeam
   | ServiceRequest
   | Consent
-  | FamilyMemberHistory;
+  | FamilyMemberHistory
+  | Coverage;
 
 export interface BundleEntry {
   fullUrl?: string;

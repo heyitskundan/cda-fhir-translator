@@ -1,6 +1,7 @@
 import type {
   AllergyIntolerance,
   Condition,
+  Coverage,
   DiagnosticReport,
   Encounter,
   FamilyMemberHistory,
@@ -17,6 +18,7 @@ import { buildEncountersSection } from "./encounters.js";
 import { buildFamilyHistorySection } from "./family-history.js";
 import { buildImmunizationsSection } from "./immunizations.js";
 import { buildMedicationsSection } from "./medications.js";
+import { buildPayersSection } from "./payers.js";
 import { buildProblemsSection } from "./problems.js";
 import { buildProceduresSection } from "./procedures.js";
 import { buildResultsSection } from "./results.js";
@@ -60,6 +62,7 @@ export function buildAllSections(
     buildEncountersSection(encounters),
     buildSocialHistorySection(observations),
     buildFamilyHistorySection(byType<FamilyMemberHistory>(resources, "FamilyMemberHistory")),
+    buildPayersSection(byType<Coverage>(resources, "Coverage")),
   ];
 
   return {

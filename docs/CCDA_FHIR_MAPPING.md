@@ -33,6 +33,7 @@ Patient detail: `id[@root=2.16.840.1.113883.4.1]` → `Patient.identifier` with 
 | Encounters     | 46240-8 | `2.16.840.1.113883.10.20.22.4.49` (Encounter Activity V3)           | `Encounter`                            |
 | Social History | 29762-2 | `2.16.840.1.113883.10.20.22.4.78` (Smoking Status Observation)      | `Observation[category=social-history]` |
 | Family History | 10157-6 | `2.16.840.1.113883.10.20.22.4.45` (Family History Organizer V3)     | `FamilyMemberHistory`                  |
+| Payers         | 48768-6 | `2.16.840.1.113883.10.20.22.4.60` (Coverage Activity V3)            | `Coverage`                             |
 
 Field-level detail:
 
@@ -67,10 +68,14 @@ Field-level detail:
 - **Family History**: `subject/relatedSubject/code` → `relationship`; each nested Family
   History Observation's `value[@xsi:type=CD]` → one `condition[].code` entry. One organizer
   produces one `FamilyMemberHistory` with zero or more conditions.
+- **Payers**: `statusCode/@code` → `status` (`completed`/`active` → `active`,
+  `aborted`/`cancelled` → `cancelled`, unrecognized or missing → `active`); nested Policy
+  Activity's `code` → `type`; `.../representedOrganization/name` → `payor[].display`
+  (display-only — no `Organization` resource is created).
 
 ## FHIR → CDA (reverse direction)
 
-`fhirToCda` builds the same 10 sections and header back into C-CDA XML — the tables above
+`fhirToCda` builds the same 11 sections and header back into C-CDA XML — the tables above
 apply in reverse, field for field. Three differences from a strict inverse:
 
 - **Document type is fixed.** `fhirToCda` always builds a Continuity of Care Document

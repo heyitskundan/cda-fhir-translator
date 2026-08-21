@@ -15,7 +15,7 @@ describe("docs/CCDA_FHIR_MAPPING.md stays in sync with the section dispatcher", 
     }
   });
 
-  it("doesn't leave a documented section unmapped in code (10 sections)", () => {
-    expect(SUPPORTED_SECTION_LOINC_CODES).toHaveLength(10);
+  it("doesn't leave a documented section unmapped in code (11 sections)", () => {
+    expect(SUPPORTED_SECTION_LOINC_CODES).toHaveLength(11);
   });
 });
