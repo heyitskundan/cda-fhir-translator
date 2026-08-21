@@ -355,6 +355,198 @@ const MAPPING_SECTIONS: MappingSection[] = [
       },
     ],
   },
+  {
+    id: "advance-directives",
+    title: "Advance Directives (42348-3) → Consent",
+    description:
+      "Entry template root `2.16.840.1.113883.10.20.22.4.48` (Advance Directive Observation), verified against the C-CDA 2.1 spec.",
+    tables: [
+      {
+        rows: [
+          { cda: "code", fhir: "Consent.category", note: "—" },
+          {
+            cda: "statusCode/@code",
+            fhir: "Consent.status",
+            note: "completed/active → active, aborted → inactive, cancelled → rejected",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "functional-mental-health-status",
+    title: "Functional Status / Mental Status / Health Status Evaluations and Outcomes",
+    description:
+      "Three Observation-based sections, same field mapping as Results' component/observation (see above). Tagged with a category that's this package's own convention (functional-status, mental-status, health-status), not one drawn from the C-CDA-on-FHIR IG.",
+    tables: [
+      {
+        rows: [
+          {
+            cda: "47420-5 → observation[...4.67]",
+            fhir: "Observation[category=functional-status]",
+            note: "—",
+          },
+          {
+            cda: "10190-7 → observation[...4.74]",
+            fhir: "Observation[category=mental-status]",
+            note: "—",
+          },
+          {
+            cda: "11383-7 → observation[...4.144 or ...4.110]",
+            fhir: "Observation[category=health-status]",
+            note: "Two entry templates (Outcome / Progress Toward Goal); which one isn't recoverable on a roundtrip",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "goals",
+    title: "Goals (61146-7) → Goal",
+    description:
+      "Entry template root `2.16.840.1.113883.10.20.22.4.121` (Goal Observation), verified against the C-CDA 2.1 spec.",
+    tables: [
+      {
+        rows: [
+          { cda: "code", fhir: "Goal.description", note: "—" },
+          { cda: "statusCode/@code", fhir: "Goal.lifecycleStatus", note: "—" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "health-concerns",
+    title: "Health Concerns (75310-3) → Condition[category=health-concern]",
+    description:
+      "Entry template root `2.16.840.1.113883.10.20.22.4.132` (Health Concern Act), verified against the C-CDA 2.1 spec.",
+    tables: [
+      {
+        rows: [
+          { cda: "code", fhir: "Condition.code", note: "—" },
+          { cda: "effectiveTime/low", fhir: "Condition.onsetDateTime", note: "—" },
+        ],
+      },
+    ],
+    footnote:
+      "Always tagged `category=health-concern` (the real US Core condition-category code) so the reverse direction can tell it apart from the plain Problems section.",
+  },
+  {
+    id: "care-teams",
+    title: "Care Teams (85847-2) → CareTeam",
+    description:
+      "Entry template root `2.16.840.1.113883.10.20.22.4.500` (Care Team Organizer), verified against the C-CDA 2.1 spec.",
+    tables: [
+      {
+        rows: [
+          { cda: "code/@displayName", fhir: "CareTeam.name", note: "—" },
+          { cda: "statusCode/@code", fhir: "CareTeam.status", note: "—" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "medications-variants",
+    title: "Medications Administered / Admission / Discharge Medications → MedicationStatement",
+    description:
+      "Same field mapping as Medications (see above). Medications Administered reuses the exact same entry template as Medications; Admission/Discharge Medications use their own entry templates.",
+    tables: [
+      {
+        rows: [
+          {
+            cda: "29549-3 → substanceAdministration[...4.16, same as Medications]",
+            fhir: "MedicationStatement[category=inpatient]",
+            note: "A real FHIR MedicationStatement-category code",
+          },
+          {
+            cda: "42346-7 → substanceAdministration[...4.36]",
+            fhir: "MedicationStatement",
+            note: 'category=[{text:"Admission Medication"}] — no coding system exists for this',
+          },
+          {
+            cda: "75311-1 → substanceAdministration[...4.35]",
+            fhir: "MedicationStatement",
+            note: 'category=[{text:"Discharge Medication"}]',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "medical-equipment",
+    title: "Medical Equipment (46264-8) → Device",
+    description:
+      "Entry template root `2.16.840.1.113883.10.20.22.4.50` (Non-Medicinal Supply Activity), verified against the C-CDA 2.1 spec.",
+    tables: [
+      {
+        rows: [
+          {
+            cda: "participant/participantRole/playingDevice/code",
+            fhir: "Device.type",
+            note: "—",
+          },
+          { cda: "statusCode/@code", fhir: "Device.status", note: "—" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "past-medical-history",
+    title: "Past Medical History (11348-0) → Condition",
+    description:
+      "Reuses the Problem Observation entry template (same as the Problems section) — see docs/CCDA_FHIR_MAPPING.md.",
+    tables: [
+      {
+        rows: [
+          { cda: "value[@xsi:type=CD]", fhir: "Condition.code", note: "—" },
+          { cda: "effectiveTime/low", fhir: "Condition.onsetDateTime", note: "—" },
+        ],
+      },
+    ],
+    footnote:
+      'Tagged with a text-only category ("Past Medical History" — no coding system exists for this) so the reverse direction can tell it apart from the plain Problems section.',
+  },
+  {
+    id: "planned-procedure-plan-of-treatment",
+    title: "Planned Procedure / Plan of Treatment → ServiceRequest[intent=plan]",
+    description:
+      "Planned Procedure (59772-4) has one entry template. Plan of Treatment (18776-5) fans out into 8 entry templates (Planned Act, Planned Encounter, Planned Immunization Activity, Planned Medication Activity, Planned Observation, Planned Procedure, Planned Supply, Instruction) — HL7 hasn't published a FHIR mapping for any of them.",
+    tables: [
+      {
+        rows: [
+          { cda: "code", fhir: "ServiceRequest.code", note: "—" },
+          { cda: "statusCode/@code", fhir: "ServiceRequest.status", note: "—" },
+          {
+            cda: "effectiveTime/@value or low",
+            fhir: "ServiceRequest.occurrenceDateTime",
+            note: "—",
+          },
+        ],
+      },
+    ],
+    footnote:
+      "Rather than invent 7 unverified FHIR-resource conventions for Plan of Treatment's templates, every entry collapses into one ServiceRequest(intent=plan), tagged category=[{text:\"Plan of Treatment\"}] to distinguish it from Planned Procedure. On the reverse direction, which of the 7 source templates an entry came from isn't preserved — it always rebuilds as a Planned Observation.",
+  },
+  {
+    id: "notes",
+    title: "Notes → DocumentReference",
+    description:
+      "Entry template root `2.16.840.1.113883.10.20.22.4.202` (Note Activity). The section's own code is drawn from a value set, not one fixed LOINC — found by the section's own templateId (`2.16.840.1.113883.10.20.22.2.65`) instead of `findSectionByLoinc`. The one section here with a FHIR mapping confirmed by HL7's own C-CDA-on-FHIR IG.",
+    tables: [
+      {
+        rows: [
+          { cda: "code", fhir: "DocumentReference.type", note: "—" },
+          { cda: "text", fhir: "DocumentReference.description", note: "—" },
+          {
+            cda: "effectiveTime/@value or low",
+            fhir: "DocumentReference.date",
+            note: "—",
+          },
+        ],
+      },
+    ],
+    footnote:
+      'On the reverse direction, the original, more specific note-type code isn\'t preserved — the section rebuilds under the generic "Note" LOINC (34109-9).',
+  },
 ];
 
 const CODE_SYSTEMS: { oid: string; uri: string }[] = [
@@ -478,8 +670,7 @@ export function DataMapping() {
         generically to <code>Composition.section[]</code> instead of a discrete resource — the C-CDA
         2.1 spec doesn&apos;t mandate structured entries for them, and real-world documents
         essentially never populate them with machine-readable clinical statements. See{" "}
-        <code>docs/CCDA_FHIR_MAPPING.md</code> in the repository for the full list and field-level
-        detail on every section, including the 14 sections beyond the tables below.
+        <code>docs/CCDA_FHIR_MAPPING.md</code> in the repository for the full list of all 38.
       </p>
 
       <h2 id="supported" className="mt-8">

@@ -37,6 +37,22 @@ export const dataMappingRail: RailItem[] = [
   { href: "#social-history", label: "Social History → Observation" },
   { href: "#family-history", label: "Family History → FamilyMemberHistory" },
   { href: "#payers", label: "Payers → Coverage" },
+  { href: "#advance-directives", label: "Advance Directives → Consent" },
+  {
+    href: "#functional-mental-health-status",
+    label: "Functional / Mental / Health Status → Observation",
+  },
+  { href: "#goals", label: "Goals → Goal" },
+  { href: "#health-concerns", label: "Health Concerns → Condition" },
+  { href: "#care-teams", label: "Care Teams → CareTeam" },
+  { href: "#medications-variants", label: "Medications Administered / Admission / Discharge" },
+  { href: "#medical-equipment", label: "Medical Equipment → Device" },
+  { href: "#past-medical-history", label: "Past Medical History → Condition" },
+  {
+    href: "#planned-procedure-plan-of-treatment",
+    label: "Planned Procedure / Plan of Treatment → ServiceRequest",
+  },
+  { href: "#notes", label: "Notes → DocumentReference" },
   { href: "#terminology", label: "Code systems" },
 ];
 
