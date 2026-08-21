@@ -3,6 +3,7 @@ import { TranslateError } from "../shared/errors.js";
 import { parseCdaXml } from "./parser.js";
 import { mapHeader } from "./header.js";
 import { mapAllSections } from "./sections/index.js";
+import { mapNarrativeSections } from "./sections/narrative.js";
 
 /** Translates a C-CDA 2.1 XML document into a FHIR R4 Bundle, per the mapping tables in
  * docs/CCDA_FHIR_MAPPING.md. Deterministic: the same input always produces the same
@@ -13,6 +14,7 @@ export function cdaToFhir(cdaXml: string, options: TranslateOptions = {}): Trans
   const header = mapHeader(doc);
   const patientRef = { reference: `Patient/${header.patient.id}` };
   const sections = mapAllSections(doc, patientRef);
+  const narrativeSections = mapNarrativeSections(doc);
 
   const warnings = [...header.warnings, ...sections.warnings];
   if (options.strict && warnings.length > 0) {
@@ -24,12 +26,16 @@ export function cdaToFhir(cdaXml: string, options: TranslateOptions = {}): Trans
     );
   }
 
+  const composition = narrativeSections.length
+    ? { ...header.composition, section: narrativeSections }
+    : header.composition;
+
   const headerResources = [
     header.patient,
     ...(header.practitioner ? [header.practitioner] : []),
     ...(header.organization ? [header.organization] : []),
     ...(header.encounter ? [header.encounter] : []),
-    header.composition,
+    composition,
   ];
 
   const bundle: FhirBundle = {

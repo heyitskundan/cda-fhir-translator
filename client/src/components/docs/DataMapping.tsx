@@ -35,6 +35,29 @@ const SUPPORTED_SECTIONS: SupportedSection[] = [
   { loinc: "29762-2", label: "Social History", fhir: "Observation[category=social-history]" },
   { loinc: "10157-6", label: "Family History", fhir: "FamilyMemberHistory" },
   { loinc: "48768-6", label: "Payers", fhir: "Coverage" },
+  { loinc: "42348-3", label: "Advance Directives", fhir: "Consent" },
+  { loinc: "47420-5", label: "Functional Status", fhir: "Observation[category=functional-status]" },
+  { loinc: "10190-7", label: "Mental Status", fhir: "Observation[category=mental-status]" },
+  { loinc: "61146-7", label: "Goals", fhir: "Goal" },
+  { loinc: "75310-3", label: "Health Concerns", fhir: "Condition[category=health-concern]" },
+  {
+    loinc: "11383-7",
+    label: "Health Status Evaluations and Outcomes",
+    fhir: "Observation[category=health-status]",
+  },
+  { loinc: "85847-2", label: "Care Teams", fhir: "CareTeam" },
+  {
+    loinc: "29549-3",
+    label: "Medications Administered",
+    fhir: "MedicationStatement[category=inpatient]",
+  },
+  { loinc: "42346-7", label: "Admission Medications", fhir: "MedicationStatement" },
+  { loinc: "75311-1", label: "Discharge Medications", fhir: "MedicationStatement" },
+  { loinc: "46264-8", label: "Medical Equipment", fhir: "Device" },
+  { loinc: "11348-0", label: "Past Medical History", fhir: "Condition" },
+  { loinc: "59772-4", label: "Planned Procedure", fhir: "ServiceRequest[intent=plan]" },
+  { loinc: "18776-5", label: "Plan of Treatment", fhir: "ServiceRequest[intent=plan]" },
+  { loinc: "(value set)", label: "Notes", fhir: "DocumentReference" },
 ];
 
 interface FieldRow {
@@ -444,9 +467,19 @@ export function DataMapping() {
           C-CDA on FHIR R4 Implementation Guide
         </a>
         . Section extraction is document-type-agnostic — <code>cdaToFhir</code> scans any C-CDA
-        document for whichever of the 11 supported sections it contains.
+        document for whichever of the 25 structured sections it contains, each mapping to a discrete
+        FHIR resource type.
         <code> fhirToCda</code> always builds a Continuity of Care Document (document-type selection
         isn&apos;t implemented yet).
+      </p>
+      <p className="text-sm" style={muted}>
+        A further 38 narrative-only sections (Chief Complaint, Reason for Visit, History of Present
+        Illness, all the hospital-stay and operative-note component sections, and more) map
+        generically to <code>Composition.section[]</code> instead of a discrete resource — the C-CDA
+        2.1 spec doesn&apos;t mandate structured entries for them, and real-world documents
+        essentially never populate them with machine-readable clinical statements. See{" "}
+        <code>docs/CCDA_FHIR_MAPPING.md</code> in the repository for the full list and field-level
+        detail on every section, including the 14 sections beyond the tables below.
       </p>
 
       <h2 id="supported" className="mt-8">

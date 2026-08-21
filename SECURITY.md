@@ -2,8 +2,8 @@
 
 ## Supported versions
 
-This package is pre-1.0 (`0.x`). Security fixes land on the latest published version;
-older `0.x` versions are not separately patched.
+Security fixes land on the latest published major version; older major versions are
+not separately patched.
 
 ## Reporting a vulnerability
 

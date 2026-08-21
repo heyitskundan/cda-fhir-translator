@@ -1,7 +1,7 @@
 {
   "name": "cda-fhir-translator-monorepo",
   "private": true,
-  "version": "0.3.0",
+  "version": "1.0.0",
   "type": "module",
   "description": "Monorepo for cda-fhir-translator (the published npm package) and its browser demo",
   "license": "Apache-2.0",

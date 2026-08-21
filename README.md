@@ -41,19 +41,42 @@ always builds a Continuity of Care Document — see
 [`docs/CCDA_FHIR_MAPPING.md`](./docs/CCDA_FHIR_MAPPING.md) for that limitation and the
 Vital Signs grouping caveat.
 
-| Section        | LOINC   |
-| -------------- | ------- |
-| Allergies      | 48765-2 |
-| Medications    | 10160-0 |
-| Problems       | 11450-4 |
-| Vital Signs    | 8716-3  |
-| Results        | 30954-2 |
-| Procedures     | 47519-4 |
-| Immunizations  | 11369-6 |
-| Encounters     | 46240-8 |
-| Social History | 29762-2 |
-| Family History | 10157-6 |
-| Payers         | 48768-6 |
+| Section                                | LOINC                        |
+| -------------------------------------- | ---------------------------- |
+| Allergies                              | 48765-2                      |
+| Medications                            | 10160-0                      |
+| Problems                               | 11450-4                      |
+| Vital Signs                            | 8716-3                       |
+| Results                                | 30954-2                      |
+| Procedures                             | 47519-4                      |
+| Immunizations                          | 11369-6                      |
+| Encounters                             | 46240-8                      |
+| Social History                         | 29762-2                      |
+| Family History                         | 10157-6                      |
+| Payers                                 | 48768-6                      |
+| Advance Directives                     | 42348-3                      |
+| Functional Status                      | 47420-5                      |
+| Mental Status                          | 10190-7                      |
+| Goals                                  | 61146-7                      |
+| Health Concerns                        | 75310-3                      |
+| Health Status Evaluations and Outcomes | 11383-7                      |
+| Care Teams                             | 85847-2                      |
+| Medications Administered               | 29549-3                      |
+| Admission Medications                  | 42346-7                      |
+| Discharge Medications                  | 75311-1                      |
+| Medical Equipment                      | 46264-8                      |
+| Past Medical History                   | 11348-0                      |
+| Planned Procedure                      | 59772-4                      |
+| Plan of Treatment                      | 18776-5                      |
+| Notes                                  | (value set — no fixed LOINC) |
+
+Full C-CDA 2.1 section coverage: the 25 sections above each map to a discrete FHIR
+resource type; a further 38 narrative-only sections (Chief Complaint, Reason for Visit,
+History of Present Illness, all the hospital-stay and operative-note component
+sections, and more) map generically to `Composition.section[]` — see
+[`src/shared/narrative-sections.ts`](./packages/core/src/shared/narrative-sections.ts)
+for the full list. One section (`Course of Care Section`) is deliberately excluded —
+its LOINC code couldn't be independently verified during research.
 
 Each section's entry template root is verified against the C-CDA 2.1 spec — see
 [`docs/CCDA_FHIR_MAPPING.md`](./docs/CCDA_FHIR_MAPPING.md) for the field-level detail.

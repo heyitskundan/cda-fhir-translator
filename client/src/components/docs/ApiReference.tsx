@@ -20,9 +20,10 @@ export function ApiReference() {
         </code>
         <p className="mt-2 text-sm" style={muted}>
           Parses a C-CDA 2.1 XML document and maps its header (Patient, Practitioner, Organization,
-          Encounter, Composition) plus 11 sections into a FHIR R4 document <code>Bundle</code>.
-          Non-strict mode (default) turns unmappable content into a <code>warnings</code> entry;
-          strict mode throws <code>TranslateError</code> on the first one.
+          Encounter, Composition) plus 25 structured sections and 38 narrative-only sections into a
+          FHIR R4 document <code>Bundle</code>. Non-strict mode (default) turns unmappable content
+          into a <code>warnings</code> entry; strict mode throws <code>TranslateError</code> on the
+          first one.
         </p>
       </div>
       <CodeBlock
@@ -41,8 +42,8 @@ result.warnings;  // [{ path, message }, ...] — content with no known mapping`
           fhirToCda(bundle: FhirBundle): TranslateToCdaResult
         </code>
         <p className="mt-2 text-sm" style={muted}>
-          The reverse direction, for the same 11 sections. Always builds a Continuity of Care
-          Document — document-type selection isn&apos;t implemented yet. Doesn&apos;t take a{" "}
+          The reverse direction, for the same sections. Always builds a Continuity of Care Document
+          — document-type selection isn&apos;t implemented yet. Doesn&apos;t take a{" "}
           <code>strict</code> option; it always warns and continues.
         </p>
       </div>

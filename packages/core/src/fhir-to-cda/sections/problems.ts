@@ -9,7 +9,8 @@ import { buildSection, type SectionBuildResult } from "./shared.js";
 
 const PROBLEM_OBSERVATION = "2.16.840.1.113883.10.20.22.4.4";
 
-function buildEntry(condition: Condition): CdaNode | undefined {
+/** Shared with past-medical-history.ts, which reuses this same entry template. */
+export function buildEntry(condition: Condition): CdaNode | undefined {
   const code = codeableConceptToCdaCode(condition.code);
   if (!code) return undefined;
 
@@ -34,8 +35,12 @@ function buildEntry(condition: Condition): CdaNode | undefined {
   } as CdaNode;
 }
 
+/** Only the plain Problems section — Conditions tagged with a category (Health
+ * Concerns, Past Medical History) belong to their own sections instead. See
+ * Condition.category in shared/types.ts. */
 export function buildProblemsSection(conditions: Condition[]): SectionBuildResult {
   const entries = conditions
+    .filter((c) => !c.category?.length)
     .map((c) => {
       const node = buildEntry(c);
       return node ? { node, resourceId: c.id ?? "unknown" } : undefined;

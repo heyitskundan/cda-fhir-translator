@@ -35,7 +35,7 @@ export default function App() {
         style={{ background: "var(--color-bg)", borderBottom: "1px solid var(--color-divider)" }}
       >
         <span className="nav-brand">cda-fhir-translator</span>
-        <span className="tag tag-neutral">v0.3.0 · pre-1.0</span>
+        <span className="tag tag-neutral">v1.0.0</span>
 
         <div className="seg" role="radiogroup" aria-label="Section">
           <label className="seg-opt">

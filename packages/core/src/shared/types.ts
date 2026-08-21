@@ -89,6 +89,12 @@ export interface Encounter extends FhirResourceBase {
   period?: { start?: string; end?: string };
 }
 
+export interface CompositionSection {
+  title?: string;
+  code?: CodeableConcept;
+  text?: string;
+}
+
 export interface Composition extends FhirResourceBase {
   resourceType: "Composition";
   status: "final" | "preliminary" | "entered-in-error";
@@ -99,6 +105,7 @@ export interface Composition extends FhirResourceBase {
   confidentiality?: string;
   custodian?: Reference;
   encounter?: Reference;
+  section?: CompositionSection[];
 }
 
 export interface AllergyIntolerance extends FhirResourceBase {
@@ -123,6 +130,11 @@ export interface MedicationStatement extends FhirResourceBase {
   medicationCodeableConcept?: CodeableConcept;
   subject: Reference;
   dosage?: Dosage[];
+  /** Distinguishes which C-CDA medication-ish section this came from (Medications
+   * Administered / Admission Medications / Discharge Medications reuse Medications'
+   * entry template, so this is how fhirToCda tells them apart on the reverse
+   * direction). Absent means the plain Medications section. */
+  category?: CodeableConcept[];
 }
 
 export interface Condition extends FhirResourceBase {
@@ -132,6 +144,9 @@ export interface Condition extends FhirResourceBase {
   subject: Reference;
   onsetDateTime?: string;
   abatementDateTime?: string;
+  /** Distinguishes Health Concerns / Past Medical History from the plain Problems
+   * section — see MedicationStatement.category for why. */
+  category?: CodeableConcept[];
 }
 
 export interface Observation extends FhirResourceBase {
@@ -193,6 +208,10 @@ export interface ServiceRequest extends FhirResourceBase {
   code?: CodeableConcept;
   subject: Reference;
   occurrenceDateTime?: string;
+  /** Distinguishes Plan of Treatment's generic planned-activity ServiceRequests from
+   * Planned Procedure's — both produce intent=plan with no other distinguishing field
+   * otherwise. Absent means Planned Procedure. */
+  category?: CodeableConcept[];
 }
 
 export interface FamilyMemberHistory extends FhirResourceBase {
@@ -218,6 +237,22 @@ export interface Consent extends FhirResourceBase {
   category?: CodeableConcept[];
 }
 
+export interface Device extends FhirResourceBase {
+  resourceType: "Device";
+  status?: string;
+  type?: CodeableConcept;
+  patient?: Reference;
+}
+
+export interface DocumentReference extends FhirResourceBase {
+  resourceType: "DocumentReference";
+  status: string;
+  type?: CodeableConcept;
+  subject?: Reference;
+  date?: string;
+  description?: string;
+}
+
 export type FhirResource =
   | Patient
   | Practitioner
@@ -236,7 +271,9 @@ export type FhirResource =
   | ServiceRequest
   | Consent
   | FamilyMemberHistory
-  | Coverage;
+  | Coverage
+  | Device
+  | DocumentReference;
 
 export interface BundleEntry {
   fullUrl?: string;

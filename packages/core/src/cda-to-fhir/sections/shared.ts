@@ -43,6 +43,22 @@ export function findSectionByLoinc(root: CdaNode, loincCode: string): CdaNode | 
   return undefined;
 }
 
+/** Finds the section element by its section-level `templateId/@root`, for the handful
+ * of sections (e.g. Notes) whose `code` is drawn from a value set rather than one fixed
+ * LOINC code, so `findSectionByLoinc` can't be used. */
+export function findSectionByTemplateId(root: CdaNode, templateOid: string): CdaNode | undefined {
+  const structuredBody = (root["component"] as CdaNode | undefined)?.["structuredBody"] as
+    CdaNode | undefined;
+  const components = asArray(structuredBody?.["component"] as CdaNode | CdaNode[] | undefined);
+
+  for (const component of components) {
+    const section = component["section"] as CdaNode | undefined;
+    const templateIds = asArray(section?.["templateId"] as CdaNode | CdaNode[] | undefined);
+    if (templateIds.some((t) => t["@root"] === templateOid)) return section;
+  }
+  return undefined;
+}
+
 export function mapSection(
   root: CdaNode,
   patientRef: Reference,

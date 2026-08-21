@@ -3,16 +3,51 @@ export function Changelog() {
     <div>
       <h1 className="mb-2">Changelog</h1>
       <p className="mb-8" style={{ opacity: 0.85 }}>
-        This package is pre-1.0 (<code>0.x</code>) — security fixes land on the latest published
-        version; older 0.x versions are not separately patched. See <code>CHANGELOG.md</code> in the
-        repo for the source of this page.
+        v1.0.0 is the first stable release — the public API (<code>cdaToFhir</code>,{" "}
+        <code>fhirToCda</code>, and the shape of their results) is considered stable from here. See{" "}
+        <code>CHANGELOG.md</code> in the repo for the source of this page.
       </p>
 
       <div className="flex flex-col gap-6">
+        <div id="v1-0-0" className="border-t pt-3" style={{ borderColor: "var(--color-divider)" }}>
+          <div className="mb-2 flex items-baseline gap-3">
+            <h3 className="m-0">v1.0.0</h3>
+            <span className="text-muted text-sm">current release</span>
+          </div>
+          <div className="mb-2 flex gap-2">
+            <span className="tag tag-accent">Added</span>
+          </div>
+          <ul className="m-0 flex list-disc flex-col gap-1 pl-5" style={{ opacity: 0.85 }}>
+            <li>
+              Full C-CDA 2.1 section coverage: 14 more structured sections (Advance Directives,
+              Functional Status, Mental Status, Goals, Health Concerns, Health Status Evaluations
+              and Outcomes, Care Teams, Medications Administered, Admission/Discharge Medications,
+              Medical Equipment, Past Medical History, Planned Procedure, Plan of Treatment, Notes)
+              — 25 structured sections total, each mapping to a discrete FHIR resource type
+            </li>
+            <li>
+              38 narrative-only sections (Chief Complaint, Reason for Visit, History of Present
+              Illness, and more) map generically to <code>Composition.section[]</code> — see{" "}
+              <code>src/shared/narrative-sections.ts</code> for the full list
+            </li>
+            <li>
+              New types: <code>Device</code>, <code>DocumentReference</code>. Extended{" "}
+              <code>MedicationStatement</code>, <code>Condition</code>, and{" "}
+              <code>ServiceRequest</code> with an optional <code>category</code> field so sections
+              sharing a FHIR resource type with an existing section (e.g. Medications Administered
+              and Medications both produce <code>MedicationStatement</code>) round-trip without
+              colliding
+            </li>
+            <li>
+              Plan of Treatment collapses 7 different C-CDA entry templates into one{" "}
+              <code>ServiceRequest(intent=plan)</code> — HL7 hasn&apos;t published a FHIR mapping
+              for any of them, so this is a documented simplification, not an IG-confirmed mapping
+            </li>
+          </ul>
+        </div>
         <div id="v0-3-0" className="border-t pt-3" style={{ borderColor: "var(--color-divider)" }}>
           <div className="mb-2 flex items-baseline gap-3">
             <h3 className="m-0">v0.3.0</h3>
-            <span className="text-muted text-sm">current release</span>
           </div>
           <div className="mb-2 flex gap-2">
             <span className="tag tag-accent">Added</span>

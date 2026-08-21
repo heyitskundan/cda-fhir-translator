@@ -1,5 +1,37 @@
 # Changelog
 
+## v1.0.0
+
+First stable release. The public API (`cdaToFhir`, `fhirToCda`, and the shape of their
+`TranslateResult`/`TranslateToCdaResult`) is considered stable from here — it hasn't
+changed across 0.1.0 → 0.3.0, only grown additively.
+
+- Full C-CDA 2.1 section coverage. 14 more structured sections, both directions:
+  Advance Directives (42348-3), Functional Status (47420-5), Mental Status (10190-7),
+  Goals (61146-7), Health Concerns (75310-3), Health Status Evaluations and Outcomes
+  (11383-7), Care Teams (85847-2), Medications Administered (29549-3), Admission
+  Medications (42346-7), Discharge Medications (75311-1), Medical Equipment (46264-8),
+  Past Medical History (11348-0), Planned Procedure (59772-4), Plan of Treatment
+  (18776-5), and Notes (section code drawn from a value set, not one fixed LOINC). 25
+  structured sections total, each mapping to a discrete FHIR resource type.
+- 38 additional narrative-only sections (Chief Complaint, Reason for Visit, History of
+  Present Illness, Review of Systems, all the hospital-stay and operative-note
+  component sections, and more) map generically to `Composition.section[]` — see
+  `src/shared/narrative-sections.ts` for the full list. One section (`Course of Care
+Section`) is deliberately excluded — its LOINC code couldn't be independently
+  verified during research, and this package doesn't ship an OID it can't verify.
+- New types: `Device`, `DocumentReference`. Extended `MedicationStatement`,
+  `Condition`, and `ServiceRequest` with an optional `category` field, so sections that
+  share a FHIR resource type with an existing section (Medications Administered /
+  Admission Medications / Discharge Medications vs. Medications; Health Concerns /
+  Past Medical History vs. Problems; Plan of Treatment vs. Planned Procedure) round-trip
+  without colliding — see `docs/CCDA_FHIR_MAPPING.md`.
+- Plan of Treatment collapses 7 different C-CDA entry templates (Planned Act, Planned
+  Encounter, Planned Immunization Activity, Planned Medication Activity, Planned
+  Observation, Planned Procedure, Planned Supply) plus Instruction into one
+  `ServiceRequest(intent=plan)` — HL7 hasn't published a FHIR mapping for any of them,
+  so this is a documented simplification, not an IG-confirmed mapping.
+
 ## v0.3.0
 
 - `cdaToFhir`/`fhirToCda`: Payers/Insurance (48768-6), both directions. Maps to a new

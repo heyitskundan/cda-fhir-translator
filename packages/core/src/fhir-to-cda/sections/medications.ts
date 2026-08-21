@@ -8,7 +8,8 @@ import { buildSection, type SectionBuildResult } from "./shared.js";
 
 const MEDICATION_ACTIVITY = "2.16.840.1.113883.10.20.22.4.16";
 
-function buildEntry(med: MedicationStatement): CdaNode | undefined {
+/** Shared with medications-administered.ts, which reuses this same entry template. */
+export function buildEntry(med: MedicationStatement): CdaNode | undefined {
   const medicationCode = codeableConceptToCdaCode(med.medicationCodeableConcept);
   if (!medicationCode) return undefined;
 
@@ -33,8 +34,12 @@ function buildEntry(med: MedicationStatement): CdaNode | undefined {
   } as CdaNode;
 }
 
+/** Only the plain Medications section — MedicationStatements tagged with a category
+ * (Medications Administered, Admission/Discharge Medications) belong to their own
+ * sections instead. See MedicationStatement.category in shared/types.ts. */
 export function buildMedicationsSection(medications: MedicationStatement[]): SectionBuildResult {
   const entries = medications
+    .filter((m) => !m.category?.length)
     .map((m) => {
       const node = buildEntry(m);
       return node ? { node, resourceId: m.id ?? "unknown" } : undefined;
