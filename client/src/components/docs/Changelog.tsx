@@ -19,14 +19,14 @@ export function Changelog() {
           </div>
           <ul className="m-0 flex list-disc flex-col gap-1 pl-5" style={{ opacity: 0.85 }}>
             <li>
-              Full C-CDA 2.1 section coverage: 14 more structured sections (Advance Directives,
+              Full C-CDA 2.1 section coverage: 15 more structured sections (Advance Directives,
               Functional Status, Mental Status, Goals, Health Concerns, Health Status Evaluations
               and Outcomes, Care Teams, Medications Administered, Admission/Discharge Medications,
               Medical Equipment, Past Medical History, Planned Procedure, Plan of Treatment, Notes)
-              — 25 structured sections total, each mapping to a discrete FHIR resource type
+              — 26 structured sections total, each mapping to a discrete FHIR resource type
             </li>
             <li>
-              38 narrative-only sections (Chief Complaint, Reason for Visit, History of Present
+              39 narrative-only sections (Chief Complaint, Reason for Visit, History of Present
               Illness, and more) map generically to <code>Composition.section[]</code> — see{" "}
               <code>src/shared/narrative-sections.ts</code> for the full list
             </li>

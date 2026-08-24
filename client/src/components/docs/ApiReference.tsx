@@ -20,7 +20,7 @@ export function ApiReference() {
         </code>
         <p className="mt-2 text-sm" style={muted}>
           Parses a C-CDA 2.1 XML document and maps its header (Patient, Practitioner, Organization,
-          Encounter, Composition) plus 25 structured sections and 38 narrative-only sections into a
+          Encounter, Composition) plus 26 structured sections and 39 narrative-only sections into a
           FHIR R4 document <code>Bundle</code>. Non-strict mode (default) turns unmappable content
           into a <code>warnings</code> entry; strict mode throws <code>TranslateError</code> on the
           first one.

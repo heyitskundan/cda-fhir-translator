@@ -6,15 +6,15 @@ First stable release. The public API (`cdaToFhir`, `fhirToCda`, and the shape of
 `TranslateResult`/`TranslateToCdaResult`) is considered stable from here — it hasn't
 changed across 0.1.0 → 0.3.0, only grown additively.
 
-- Full C-CDA 2.1 section coverage. 14 more structured sections, both directions:
+- Full C-CDA 2.1 section coverage. 15 more structured sections, both directions:
   Advance Directives (42348-3), Functional Status (47420-5), Mental Status (10190-7),
   Goals (61146-7), Health Concerns (75310-3), Health Status Evaluations and Outcomes
   (11383-7), Care Teams (85847-2), Medications Administered (29549-3), Admission
   Medications (42346-7), Discharge Medications (75311-1), Medical Equipment (46264-8),
   Past Medical History (11348-0), Planned Procedure (59772-4), Plan of Treatment
-  (18776-5), and Notes (section code drawn from a value set, not one fixed LOINC). 25
+  (18776-5), and Notes (section code drawn from a value set, not one fixed LOINC). 26
   structured sections total, each mapping to a discrete FHIR resource type.
-- 38 additional narrative-only sections (Chief Complaint, Reason for Visit, History of
+- 39 additional narrative-only sections (Chief Complaint, Reason for Visit, History of
   Present Illness, Review of Systems, all the hospital-stay and operative-note
   component sections, and more) map generically to `Composition.section[]` — see
   `src/shared/narrative-sections.ts` for the full list. One section (`Course of Care

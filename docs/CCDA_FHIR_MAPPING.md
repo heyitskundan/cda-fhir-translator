@@ -126,13 +126,13 @@ Field-level detail:
 
 ## Narrative-only sections
 
-38 additional C-CDA 2.1 sections carry narrative text only — the spec doesn't mandate
+39 additional C-CDA 2.1 sections carry narrative text only — the spec doesn't mandate
 structured entries for them, and real-world documents essentially never populate them
 with machine-readable clinical statements (Chief Complaint, Reason for Visit, History
 of Present Illness, Review of Systems, Assessment, Assessment and Plan, Instructions,
 all the hospital-stay and operative-note component sections, and more — see
 [`src/shared/narrative-sections.ts`](../packages/core/src/shared/narrative-sections.ts)
-for the full list of 38 with LOINC codes and template OIDs).
+for the full list of 39 with LOINC codes and template OIDs).
 
 These map generically to `Composition.section[]` — `section/code` → `code`,
 `section/title` → `title`, and a flattened `section/text` → `text` (mixed-content

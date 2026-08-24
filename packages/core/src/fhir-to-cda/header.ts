@@ -15,8 +15,7 @@ import { compact } from "../cda-to-fhir/utils/xml-tree.js";
 import { fhirDateTimeToHl7Timestamp } from "./utils/dates.js";
 import { codeableConceptToCdaCode } from "./utils/coding.js";
 
-// v0.1.0 builds a single fixed document type — Continuity of Care Document — since
-// `documentType` selection is deferred (see project roadmap; not tracked in this repo).
+// Fixed document type: Continuity of Care Document.
 const CCD_CODE = { "@code": "34133-9", "@codeSystem": "2.16.840.1.113883.6.1" };
 
 function buildIdentifier(id: Identifier): CdaNode {

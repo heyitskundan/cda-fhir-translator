@@ -1,4 +1,4 @@
-// The 38 C-CDA 2.1 sections that carry narrative text only — no structured entries are
+// The 39 C-CDA 2.1 sections that carry narrative text only — no structured entries are
 // mandated by the spec, and real-world documents essentially never populate them with
 // machine-readable clinical statements. Mapped generically: section/code, section/title,
 // and a flattened section/text go to Composition.section[], not to a discrete FHIR

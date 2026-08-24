@@ -70,8 +70,8 @@ Vital Signs grouping caveat.
 | Plan of Treatment                      | 18776-5                      |
 | Notes                                  | (value set — no fixed LOINC) |
 
-Full C-CDA 2.1 section coverage: the 25 sections above each map to a discrete FHIR
-resource type; a further 38 narrative-only sections (Chief Complaint, Reason for Visit,
+Full C-CDA 2.1 section coverage: the 26 sections above each map to a discrete FHIR
+resource type; a further 39 narrative-only sections (Chief Complaint, Reason for Visit,
 History of Present Illness, all the hospital-stay and operative-note component
 sections, and more) map generically to `Composition.section[]` — see
 [`src/shared/narrative-sections.ts`](./packages/core/src/shared/narrative-sections.ts)

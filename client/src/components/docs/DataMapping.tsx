@@ -659,18 +659,18 @@ export function DataMapping() {
           C-CDA on FHIR R4 Implementation Guide
         </a>
         . Section extraction is document-type-agnostic — <code>cdaToFhir</code> scans any C-CDA
-        document for whichever of the 25 structured sections it contains, each mapping to a discrete
+        document for whichever of the 26 structured sections it contains, each mapping to a discrete
         FHIR resource type.
         <code> fhirToCda</code> always builds a Continuity of Care Document (document-type selection
         isn&apos;t implemented yet).
       </p>
       <p className="text-sm" style={muted}>
-        A further 38 narrative-only sections (Chief Complaint, Reason for Visit, History of Present
+        A further 39 narrative-only sections (Chief Complaint, Reason for Visit, History of Present
         Illness, all the hospital-stay and operative-note component sections, and more) map
         generically to <code>Composition.section[]</code> instead of a discrete resource — the C-CDA
         2.1 spec doesn&apos;t mandate structured entries for them, and real-world documents
         essentially never populate them with machine-readable clinical statements. See{" "}
-        <code>docs/CCDA_FHIR_MAPPING.md</code> in the repository for the full list of all 38.
+        <code>docs/CCDA_FHIR_MAPPING.md</code> in the repository for the full list of all 39.
       </p>
 
       <h2 id="supported" className="mt-8">

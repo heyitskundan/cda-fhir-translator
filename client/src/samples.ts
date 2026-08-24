@@ -82,7 +82,7 @@ export const SAMPLE_CDA = `<!-- SYNTHETIC DATA ONLY — NOT REAL PHI -->
 </ClinicalDocument>
 `;
 
-// A second, larger synthetic C-CDA exercising every one of the 25 structured sections
+// A second, larger synthetic C-CDA exercising every one of the 26 structured sections
 // this package maps, plus two narrative-only sections — so the live demo actually
 // demonstrates the full v1.0 section coverage, not just the original three.
 export const COMPREHENSIVE_CDA = `<!-- SYNTHETIC DATA ONLY — NOT REAL PHI -->
@@ -444,7 +444,7 @@ export const SAMPLES: Sample[] = [
     content: sampleBundle,
   },
   {
-    label: "Comprehensive CCD (all 25 structured sections + narrative)",
+    label: "Comprehensive CCD (all 26 structured sections + narrative)",
     direction: "cdaToFhir",
     content: COMPREHENSIVE_CDA,
   },
